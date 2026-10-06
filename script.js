@@ -45,3 +45,58 @@ closeButtons.forEach(function(button) {
     });
 
 });
+
+
+function makeDraggable(appWindow) {
+
+    const header = appWindow.querySelector(".window-header");
+
+    let offsetX = 0;
+    let offsetY = 0;
+
+    let dragging = false;
+
+
+    header.addEventListener("mousedown", function(event) {
+
+        dragging = true;
+
+        offsetX = event.clientX - appWindow.offsetLeft;
+        offsetY = event.clientY - appWindow.offsetTop;
+
+    });
+
+
+    document.addEventListener("mousemove", function(event) {
+
+        if (!dragging) {
+            return;
+        }
+
+        appWindow.style.left =
+            event.clientX - offsetX + "px";
+
+        appWindow.style.top =
+            event.clientY - offsetY + "px";
+
+    });
+
+
+    document.addEventListener("mouseup", function() {
+
+        dragging = false;
+
+    });
+
+}
+
+
+const windows = document.querySelectorAll(".window");
+
+windows.forEach(function(appWindow) {
+
+    makeDraggable(appWindow);
+
+});
+
+
